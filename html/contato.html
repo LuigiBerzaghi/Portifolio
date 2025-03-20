@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Luigi Berzaghi</title>
+    <link rel="stylesheet" href="../css/contato.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="menu-container">
+        <button id="theme-toggle" class="theme-toggle">☾</button>
+        <header>
+            <a href="index.html" class="back-button">Voltar</a>
+        </header>
+        <h1 class="menu-title">Contato</h1>
+        <div class="content">
+            <p>Me encontre nas redes sociais abaixo!</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/luigi-berzaghi/" target="_blank" class="social-button linkedin">
+                    <img src="../img/linkedin.png" alt="LinkedIn">
+                    LinkedIn
+                </a>
+                <a href="https://github.com/luigiberzaghi" target="_blank" class="social-button github">
+                    <img src="../img/gitHub.png" alt="GitHub">
+                    GitHub
+                </a>
+                <a href="https://www.instagram.com/luigi.berzaghi" target="_blank" class="social-button instagram">
+                    <img src="../img/instagram.png" alt="Instagram">
+                    Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="cursor"></div>
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const menuContainer = document.querySelector('.menu-container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const backButton = document.querySelector('.back-button');
+
+        // Função para aplicar o tema salvo
+        function applyTheme() {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+                themeToggle.textContent = '☼';
+                themeToggle.style.backgroundColor = '#1a1a1a';
+                themeToggle.style.color = '#fff';
+                menuContainer.style.background = 'linear-gradient(135deg, #f0f0f0, #d9d9d9)';
+                cursor.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            } else {
+                document.body.classList.remove('light-theme'); // Garante que o tema escuro seja aplicado
+                themeToggle.textContent = '☾';
+                themeToggle.style.backgroundColor = '#fff';
+                themeToggle.style.color = '#1a1a1a';
+                menuContainer.style.background = 'linear-gradient(135deg, #1a1a1a, #2d2d2d)';
+                cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+            }
+        }
+
+        // Aplica o tema ao carregar a página
+        applyTheme();
+
+        // Movimento do cursor ajustado para scroll
+        document.addEventListener('mousemove', (e) => {
+            const scrollY = window.scrollY || window.pageYOffset;
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = (e.clientY + scrollY) + 'px';
+        });
+
+        // Fade-in ao carregar
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+
+        // Alternância de tema
+        themeToggle.addEventListener('click', () => {
+            if (document.body.classList.toggle('light-theme')) {
+                localStorage.setItem('theme', 'light');
+            } else {
+                localStorage.setItem('theme', 'dark');
+            }
+            applyTheme(); // Reaplica o tema após a mudança
+        });
+
+        // Transição suave ao voltar
+        backButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.body.style.opacity = '0';
+            setTimeout(() => { window.location.href = backButton.href; }, 500);
+        });
+    </script>
+</body>
+</html>

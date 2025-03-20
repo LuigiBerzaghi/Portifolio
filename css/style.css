@@ -1,0 +1,223 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    height: 100vh;
+    overflow: hidden; /* Evita rolagem na página inicial */
+    transition: background-color 0.3s ease, opacity 0.5s ease; /* Suaviza transições */
+}
+
+/* Menu flutuante na página inicial */
+.menu-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    position: relative;
+    overflow: hidden; /* Garante que os objetos não vazem */
+    opacity: 0; /* Começa invisível */
+    animation: fadeInContainer 1s ease forwards; /* Animação de entrada do container */
+}
+
+/* Botão de alternância de tema */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #fff; /* Padrão no tema escuro */
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Animação de entrada do container */
+@keyframes fadeInContainer {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Objetos flutuantes no fundo */
+.floating-object {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #cccccc); /* Padrão no tema escuro */
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 0 5px rgba(255, 255, 255, 0.8);
+    animation: float3D 10s infinite ease-in-out, fadeInObject 1.5s ease forwards;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Atraso nas animações de entrada dos objetos */
+.floating-object:nth-child(1) { animation-delay: 0.2s, 0s; }
+.floating-object:nth-child(2) { animation-delay: 0.4s, 0s; }
+.floating-object:nth-child(3) { animation-delay: 0.6s, 0s; }
+.floating-object:nth-child(4) { animation-delay: 0.8s, 0s; }
+
+/* Animação de entrada dos objetos */
+@keyframes fadeInObject {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 0.8; transform: scale(1); }
+}
+
+/* Animação 3D */
+@keyframes float3D {
+    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.8; }
+    25% { transform: translateY(-30px) translateX(20px) scale(1.1); opacity: 1; }
+    50% { transform: translateY(0) translateX(-25px) scale(0.9); opacity: 0.7; }
+    75% { transform: translateY(30px) translateX(15px) scale(1.05); opacity: 0.9; }
+    100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.8; }
+}
+
+/* Estilo do título */
+.menu-title {
+    color: #fff;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 0.5s;
+    z-index: 1;
+}
+
+/* Animação do título */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.floating-menu {
+    list-style: none;
+    text-align: center;
+    z-index: 1;
+}
+
+.floating-menu li {
+    margin: 2rem 0;
+    opacity: 0;
+    animation: floatIn 0.5s ease forwards;
+}
+
+.floating-menu li:nth-child(1) { animation-delay: 1s; }
+.floating-menu li:nth-child(2) { animation-delay: 1.2s; }
+.floating-menu li:nth-child(3) { animation-delay: 1.4s; }
+
+/* Animação de entrada dos itens */
+@keyframes floatIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.floating-menu a {
+    display: block;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.floating-menu a:hover {
+    background-color: #00b4d8;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo da bolinha do cursor */
+.cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Padrão no tema escuro */
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, background-color 0.3s ease;
+    z-index: 1000;
+}
+
+/* Tema claro */
+body.light-theme .menu-container {
+    background: linear-gradient(135deg, #f0f0f0, #d9d9d9);
+}
+
+body.light-theme .theme-toggle {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+body.light-theme .theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+body.light-theme .menu-title {
+    color: #1a1a1a;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .floating-menu a {
+    color: #1a1a1a;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .floating-object {
+    background: radial-gradient(circle at 30% 30%, #666666, #333333);
+}
+
+body.light-theme .cursor {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .menu-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .floating-menu a {
+        font-size: 1.5rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .cursor {
+        width: 15px;
+        height: 15px;
+    }
+
+    .floating-object {
+        width: 25px;
+        height: 25px;
+    }
+
+    .theme-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+}

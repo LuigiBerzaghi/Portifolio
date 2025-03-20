@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portifólio - Luigi Berzaghi</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .menu-container { transition: background 0.5s ease; }
+        .menu-title { transition: color 0.5s ease, text-shadow 0.5s ease; }
+        .floating-menu a { transition: color 0.5s ease, background-color 0.5s ease; }
+        .floating-object { transition: background 0.5s ease; }
+        .theme-toggle { transition: background-color 0.5s ease, color 0.5s ease; }
+        body { transition: opacity 0.5s ease; } /* Transição de fade no body */
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <button id="theme-toggle" class="theme-toggle">☾</button>
+        <div class="floating-object" style="top: 20%; left: 10%; animation-duration: 10s;"></div>
+        <div class="floating-object" style="top: 70%; left: 15%; animation-duration: 12s;"></div>
+        <div class="floating-object" style="top: 40%; right: 20%; animation-duration: 15s;"></div>
+        <div class="floating-object" style="bottom: 10%; right: 10%; animation-duration: 8s;"></div>
+        <h1 id="menu-title" class="menu-title">Luigi Berzaghi</h1>
+        <ul class="floating-menu">
+            <li><a id="contato-btn" href="contato.html">Contato</a></li>
+            <li><a id="sobre-mim-btn" href="sobre-mim.html">Sobre Mim</a></li>
+            <li><a id="projetos-btn" href="projetos.html">Projetos</a></li>
+        </ul>
+    </div>
+    <div class="cursor"></div>
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const title = document.getElementById('menu-title');
+        const contatoBtn = document.getElementById('contato-btn');
+        const sobreMimBtn = document.getElementById('sobre-mim-btn');
+        const projetosBtn = document.getElementById('projetos-btn');
+        const menuContainer = document.querySelector('.menu-container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const floatingObjects = document.querySelectorAll('.floating-object');
+        const menuLinks = document.querySelectorAll('.floating-menu a');
+
+        // Função para aplicar o tema salvo
+        function applyTheme() {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+                themeToggle.textContent = '☼';
+                themeToggle.style.backgroundColor = '#1a1a1a';
+                themeToggle.style.color = '#fff';
+                menuContainer.style.background = 'linear-gradient(135deg, #f0f0f0, #d9d9d9)';
+                title.style.color = '#1a1a1a';
+                title.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                menuLinks.forEach(a => {
+                    a.style.color = '#1a1a1a';
+                    a.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                });
+                floatingObjects.forEach(obj => {
+                    obj.style.background = 'radial-gradient(circle at 30% 30%, #666666, #333333)';
+                });
+                cursor.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            } else {
+                document.body.classList.remove('light-theme');
+                themeToggle.textContent = '☾';
+                themeToggle.style.backgroundColor = '#fff';
+                themeToggle.style.color = '#1a1a1a';
+                menuContainer.style.background = 'linear-gradient(135deg, #1a1a1a, #2d2d2d)';
+                title.style.color = '#fff';
+                title.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.5)';
+                menuLinks.forEach(a => {
+                    a.style.color = '#fff';
+                    a.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                });
+                floatingObjects.forEach(obj => {
+                    obj.style.background = 'radial-gradient(circle at 30% 30%, #ffffff, #cccccc)';
+                });
+                cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+            }
+        }
+
+        // Aplica o tema ao carregar a página
+        applyTheme();
+
+        // Movimento do cursor (sem scrollY, pois overflow é hidden)
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Fade-in ao carregar
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+
+        // Eventos do título
+        title.addEventListener('mouseover', () => {
+            cursor.style.backgroundColor = document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
+        });
+        title.addEventListener('mouseout', () => {
+            cursor.style.backgroundColor = document.body.classList.contains('light-theme') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+        });
+
+        // Eventos dos botões de navegação
+        [contatoBtn, sobreMimBtn, projetosBtn].forEach(btn => {
+            btn.addEventListener('mouseover', () => {
+                if (document.body.classList.contains('light-theme')) {
+                    btn.style.backgroundColor = '#1a1a1a';
+                    btn.style.color = '#fff';
+                } else {
+                    btn.style.backgroundColor = '#fff';
+                    btn.style.color = '#1a1a1a';
+                }
+                cursor.style.backgroundColor = document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+            btn.addEventListener('mouseout', () => {
+                if (document.body.classList.contains('light-theme')) {
+                    btn.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                    btn.style.color = '#1a1a1a';
+                } else {
+                    btn.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    btn.style.color = '#fff';
+                }
+                cursor.style.backgroundColor = document.body.classList.contains('light-theme') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.style.opacity = '0';
+                setTimeout(() => { window.location.href = btn.href; }, 500);
+            });
+        });
+
+        // Eventos do botão de tema
+        themeToggle.addEventListener('mouseover', () => {
+            cursor.style.backgroundColor = document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
+        });
+        themeToggle.addEventListener('mouseout', () => {
+            cursor.style.backgroundColor = document.body.classList.contains('light-theme') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+        });
+        themeToggle.addEventListener('click', () => {
+            if (document.body.classList.toggle('light-theme')) {
+                localStorage.setItem('theme', 'light');
+            } else {
+                localStorage.setItem('theme', 'dark');
+            }
+            applyTheme();
+        });
+    </script>
+</body>
+</html>
